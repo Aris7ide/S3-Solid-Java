@@ -13,5 +13,6 @@ el mismo metodo publico.
 
 ### Refactoricacion 
 
-He pillado toda la parte de construccion del text con StringBuilder y con Refactor -> Extract Method he creado un metodo llamado getText().
-
+- He pillado toda la parte de construccion del text con StringBuilder y con Refactor -> Extract Method he creado un metodo llamado getText().
+- Copiado ese codigo de StringBuilder y pasado a una nueva clase TextFormatter que se encarga de eso.
+- 
