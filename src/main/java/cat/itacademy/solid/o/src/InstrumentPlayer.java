@@ -1,7 +1,11 @@
 package cat.itacademy.solid.o.src;
 
 public class InstrumentPlayer {
-    public void play(Instrument instrument) {
-        instrument.play();
+    public String play(Instrument instrument) {
+        if (instrument != null) {
+            return instrument.play();
+        } else {
+            return "Instrument is null";
+        }
     }
 }
