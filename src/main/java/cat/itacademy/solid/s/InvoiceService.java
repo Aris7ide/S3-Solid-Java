@@ -9,6 +9,19 @@ import java.nio.file.Path;
 public class InvoiceService {
 
     public void saveToFile(Invoice invoice, Path destination) {
+        StringBuilder text = getText(invoice);
+
+        try {
+            Files.writeString(destination, text.toString());
+        } catch (IOException exception) {
+            throw new UncheckedIOException(
+                    "Could not save invoice: " + invoice.number(),
+                    exception
+            );
+        }
+    }
+
+    private static StringBuilder getText(Invoice invoice) {
         String lineSeparator = System.lineSeparator();
         StringBuilder text = new StringBuilder();
         text.append("INVOICE").append(lineSeparator);
@@ -30,15 +43,7 @@ public class InvoiceService {
         }
 
         text.append(lineSeparator).append("TOTAL: ").append(total);
-
-        try {
-            Files.writeString(destination, text.toString());
-        } catch (IOException exception) {
-            throw new UncheckedIOException(
-                    "Could not save invoice: " + invoice.number(),
-                    exception
-            );
-        }
+        return text;
     }
 
 }
