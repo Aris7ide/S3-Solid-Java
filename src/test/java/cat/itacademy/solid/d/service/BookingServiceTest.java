@@ -10,7 +10,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
+import java.time.Clock;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -72,15 +74,24 @@ class BookingServiceTest {
         );
     }
 
-    @Disabled("Fràgil: no podem controlar l'hora. Habilita'l per veure'l fallar i després fes-lo determinista.")
     @Test
     void ownerShouldCancelExactly24HoursBeforeStart() {
         // Volem provar el límit exacte, però el servei llegeix el seu propi LocalDateTime.now().
         // Quan s'executa, ja han passat uns mil·lisegons i som a "24 h menys una mica": la reserva
         // queda fora de termini i el test falla, encara que la regla diu que el límit és vàlid.
+
+        LocalDateTime fixedNow = LocalDateTime.of(2026, 6, 1, 12, 0, 0);
+
+        Clock fixedClock = Clock.fixed(
+                fixedNow.atZone(ZoneId.systemDefault()).toInstant(),
+                ZoneId.systemDefault()
+        );
+
+        BookingService serviceWithFixedClock = new BookingService(repository, fixedClock);
+
         Long id = save(LocalDateTime.now().plusHours(24));
 
-        assertDoesNotThrow(() -> service.cancelBooking("CUSTOMER-001", id));
+        assertDoesNotThrow(() -> serviceWithFixedClock.cancelBooking("CUSTOMER-001", id));
     }
 
     private Long save(LocalDateTime startsAt) {

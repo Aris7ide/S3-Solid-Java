@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-public class InMemoryBookingRepository {
+public class InMemoryBookingRepository implements Repository, AutoCloseable {
 
     private final Map<Long, Booking> bookings = new HashMap<>();
     private long nextId = 1;
@@ -50,5 +50,10 @@ public class InMemoryBookingRepository {
                 booking.getStatus(),
                 booking.getCancelledAt()
         );
+    }
+
+    @Override
+    public void close() throws Exception {
+
     }
 }

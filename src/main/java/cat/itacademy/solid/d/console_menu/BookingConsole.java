@@ -4,6 +4,8 @@ import cat.itacademy.solid.d.exception.BookingAccessDeniedException;
 import cat.itacademy.solid.d.exception.CancellationPeriodExpiredException;
 import cat.itacademy.solid.d.model.Booking;
 import cat.itacademy.solid.d.repository.H2BookingRepository;
+import cat.itacademy.solid.d.repository.InMemoryBookingRepository;
+import cat.itacademy.solid.d.repository.Repository;
 import cat.itacademy.solid.d.service.BookingService;
 
 import java.io.PrintStream;
@@ -17,13 +19,13 @@ public class BookingConsole {
     private static final int MENU_WIDTH = 48;
     private static final DateTimeFormatter FORMAT = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 
-    private final H2BookingRepository repository;
+    private final Repository repository;
     private final BookingService service;
     private final ConsoleInput input;
     private final PrintStream out;
 
     public BookingConsole(
-            H2BookingRepository repository,
+            Repository repository,
             BookingService service,
             ConsoleInput input,
             PrintStream out
@@ -64,7 +66,12 @@ public class BookingConsole {
         out.println("╔" + "═".repeat(MENU_WIDTH) + "╗");
         out.println("║" + center("RESERVES DE SALES") + "║");
         out.println("╠" + "═".repeat(MENU_WIDTH) + "╣");
-        printMenuLine("Persistència : H2 (base de dades en memòria)");
+        if (repository.equals(new InMemoryBookingRepository())){
+            printMenuLine("Persistència : base de dades en memòria");
+        }
+        else {
+            printMenuLine("Persistència : H2");
+        }
         printMenuLine("Hora actual  : LocalDateTime.now()");
         out.println("╠" + "═".repeat(MENU_WIDTH) + "╣");
         printMenuLine("[1] Llistar totes les reserves");
