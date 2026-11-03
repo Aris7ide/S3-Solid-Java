@@ -1,6 +1,6 @@
 package cat.itacademy.solid.i.src;
 
-public class AirConditioner implements MachineActions {
+public class AirConditioner implements OnOff , Air {
 
     @Override
     public void turnOn() {
@@ -20,11 +20,6 @@ public class AirConditioner implements MachineActions {
     @Override
     public void cool() {
         System.out.println("AirConditioner is cooling.");
-    }
-
-    @Override
-    public void wash() {
-        System.out.println("Wash operation not supported by AirConditioner.");
     }
 }
 
