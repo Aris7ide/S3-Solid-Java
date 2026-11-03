@@ -5,7 +5,7 @@ public class Character {
         System.out.println("The character attacks with a weapon.");
     }
 
-    public void takeDamage(int points) {
-        System.out.println("The character takes " + points + " points of damage.");
+    public String takeDamage(int points) {
+        return "The character takes " + points + " points of damage.";
     }
 }
