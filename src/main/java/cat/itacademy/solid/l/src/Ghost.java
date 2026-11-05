@@ -1,6 +1,6 @@
 package cat.itacademy.solid.l.src;
 
-public class Ghost extends Character {
+public class Ghost extends Character implements TakeOnlyMagicDamage{
 
     private int points;
     private String name;
@@ -16,8 +16,8 @@ public class Ghost extends Character {
     }
 
     @Override
-    public String takeDamage(int points) {
-        return "A ghost cannot take physical damage!";
+    public void takeOnlyMagicDamage(int damagePoints) {
+        System.out.println("Ghost take " + damagePoints + " for a magic spell.");
     }
 
     public int getPoints() {

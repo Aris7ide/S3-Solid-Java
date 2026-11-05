@@ -1,6 +1,6 @@
 package cat.itacademy.solid.l.src;
 
-public class Warrior extends Character {
+public class Warrior extends Character implements TakeDamage {
 
     private int points;
     private String name;
@@ -16,9 +16,9 @@ public class Warrior extends Character {
     }
 
     @Override
-    public String takeDamage(int points) {
+    public void takeDamage(int points) {
         this.points = this.points - (points/2);
-        return "The warrior resists and only takes " + (points / 2) + " points of damage.";
+        System.out.println("The warrior resists and only takes " + (points / 2) + " points of damage.");
     }
 
     public int getPoints() {
